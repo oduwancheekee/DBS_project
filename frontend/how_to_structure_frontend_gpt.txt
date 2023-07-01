@@ -1,0 +1,41 @@
+I'm not familiar with frontend, so tell me how to structure frontend part of our project (NodeJS). What files should there be to run with which instruments?
+
+ChatGPT:
+To structure the frontend part of your project using Node.js, you can follow a common folder structure and use popular tools and frameworks. Here's a basic structure that you can use as a starting point:
+
+    Create a new directory for your project and navigate to it.
+
+    Initialize a new Node.js project using npm init command. This will create a package.json file that keeps track of your project dependencies and configuration.
+
+    Install the necessary dependencies for your frontend development using npm install or yarn install command. Some common dependencies for frontend development include:
+        React: A popular JavaScript library for building user interfaces.
+        ReactDOM: The library that integrates React with the browser's DOM.
+        Babel: A tool for transpiling modern JavaScript code to ensure browser compatibility.
+        Webpack: A module bundler that helps manage and optimize your frontend assets.
+        CSS preprocessor (e.g., Sass, Less) or a CSS-in-JS library (e.g., styled-components) for styling your components.
+        Any additional libraries or frameworks you might need for your specific project.
+
+    Create a new directory called src (source code) at the root level of your project. This is where your frontend code will reside.
+
+    Inside the src directory, you can further organize your code as per your needs. Common directory structure includes:
+        components: Contains reusable UI components used throughout your application.
+        pages: Contains individual page components that represent different views of your application.
+        styles: Contains CSS or SCSS files for styling your components.
+        assets: Contains static assets such as images, fonts, etc.
+        utils: Contains utility functions or helper modules that can be used across your application.
+
+    Create an entry point file for your frontend code, such as index.js or App.js, inside the src directory. This file will be the starting point of your application.
+
+    Write your React components and organize them within the appropriate directories (e.g., components, pages) based on their functionality and usage.
+
+    Set up your build configuration. Create a configuration file (e.g., webpack.config.js) to define how your frontend code will be bundled, optimized, and transformed using Webpack and Babel.
+
+    Create a build script in the package.json file to run the build process and generate the optimized production-ready files.
+
+    Optionally, set up a development server for local development and hot reloading. You can use tools like webpack-dev-server, create-react-app, or any other development server of your choice.
+
+    Customize your frontend code, styles, and assets based on your project requirements.
+
+    Run your frontend development server using npm start or yarn start to see your application in action during development.
+
+Remember to follow best practices and design patterns while structuring and organizing your frontend code. You can refer to official documentation, tutorials, and example projects for specific frameworks (e.g., React) to gain a deeper understanding and explore more advanced techniques for frontend development with Node.js.
