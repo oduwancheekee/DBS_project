@@ -6,21 +6,30 @@ function NavigationBarSection(props) {
     <div className={classes.navigationBox}>
       <div className={classes.buttonBox}>
         <PrimaryButton
-          buttonTitle="Normal Table"
+          buttonTitle="Normal Table Chart"
           onClick={props.onNormalTableClick}
         />
       </div>
       <div className={classes.buttonBox}>
-        <PrimaryButton buttonTitle="Diagram" />
+        <PrimaryButton buttonTitle="Piechart" onClick={props.onPieChartClick} />
       </div>
       <div className={classes.buttonBox}>
-        <PrimaryButton buttonTitle="Heatmap" />
+        <PrimaryButton
+          buttonTitle="Column Chart"
+          onClick={props.onColumnTableClick}
+        />
       </div>
       <div className={classes.buttonBox}>
-        <PrimaryButton buttonTitle="Button 4" />
+        <PrimaryButton
+          buttonTitle="Heatmap"
+          onClick={props.onHeatmapClick}
+        />
       </div>
       <div className={classes.buttonBox}>
-        <PrimaryButton buttonTitle="Button 5" />
+        <PrimaryButton
+          buttonTitle="Button 5"
+          onClick={props.onNormalTableClick}
+        />
       </div>
       <div className={classes.buttonBox}>
         <PrimaryButton buttonTitle="Button 6" />

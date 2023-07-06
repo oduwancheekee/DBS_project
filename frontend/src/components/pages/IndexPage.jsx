@@ -1,5 +1,7 @@
-import IndexLayout from '../../../layouts/IndexLayout';
+// import IndexLayout from '../../../layouts/IndexLayout';
+// import IndexLayout from '../../layouts/IndexLayout';
 import IndexMainContent from '../contents/IndexMainContent';
+import IndexLayout from '../layouts/IndexLayout';
 
 function IndexPage(props) {
   return (
