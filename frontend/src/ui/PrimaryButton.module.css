@@ -1,0 +1,13 @@
+.primaryButton {
+  background-color: #2ae7a7;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  width: 260px;
+  height: 60px;
+}
+
+.primaryButton:hover {
+  cursor: pointer;
+  background-color: #2ae7a883;
+}

@@ -1,0 +1,25 @@
+.mainContent {
+  /* background-color: rgba(203, 112, 112, 0.735); */
+  height: 100%;
+  width: 100%;
+  /* border-radius: 32px 0px 0px 32px; */
+  /* display: flex;
+  flex-direction: row; */
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.navigationBarSection {
+  background-color: red;
+  grid-area: 1 / 1 / 2 / 2;
+  height: 100%;
+}
+
+.diagramSection {
+  background-color: green;
+  grid-area: 1 / 2 / 2 / 3;
+  /* height: 100%; */
+}
