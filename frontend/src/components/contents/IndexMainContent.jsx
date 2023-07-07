@@ -56,7 +56,6 @@ function IndexMainContent(props) {
     setIsHeatmapeClicked(true);
   }
 
-  // },[])
   return (
     <div className={classes.mainContent}>
       <div className={classes.navigationBarSection}>
@@ -70,7 +69,11 @@ function IndexMainContent(props) {
       {isNormalTableClicked && <ApexChart />}
       {isPieChartClicked && <PieChart />}
       {isColumnTableClicked && <ColumnChart />}
-      {/* {isHeatmapClicked && <GoogleApiWrapper />} */}
+      {isHeatmapClicked && (
+        <div className={classes.heatMap}>
+          <HeatMap />
+        </div>
+      )}
     </div>
   );
 }

@@ -2,7 +2,7 @@
   /* background-color: rgba(203, 112, 112, 0.735); */
   height: 100%;
   width: 100%;
-  /* border-radius: 32px 0px 0px 32px; */
+  border-radius: 32px 0px 0px 32px;
   /* */
   /* display: flex;
   flex-direction: row; */
@@ -27,8 +27,8 @@
   align-items: center;
 }
 
-.test {
-  background-color: pink;
+.heatMap {
+  /* background-color: pink; */
   width: 100%;
   height: 100%;
 }

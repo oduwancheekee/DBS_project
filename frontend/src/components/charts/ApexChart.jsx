@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
-// import classes from './ApexChart';
+import classes from './Charts.module.css';
 
 const ApexChart = () => {
   const series = [
@@ -81,6 +81,8 @@ const ApexChart = () => {
         series={series}
         type="line"
         height={'100%'}
+        border-radious={'32px 0px 0px 32px'}
+        background-color={'red'}
       />
     </div>
   );

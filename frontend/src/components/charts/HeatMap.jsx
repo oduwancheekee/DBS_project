@@ -1,57 +1,132 @@
 import React, { useEffect } from 'react';
-import { Map, GoogleApiWrapper, HeatMap } from 'google-map-react';
 
-import './styles.css';
-
-const MapContainer = (props) => {
-  const gradient = [
-    'rgba(0, 255, 255, 0)',
-    'rgba(0, 255, 255, 1)',
-    'rgba(0, 191, 255, 1)',
-    'rgba(0, 127, 255, 1)',
-    'rgba(0, 63, 255, 1)',
-    'rgba(0, 0, 255, 1)',
-    'rgba(0, 0, 223, 1)',
-    'rgba(0, 0, 191, 1)',
-    'rgba(0, 0, 159, 1)',
-    'rgba(0, 0, 127, 1)',
-    'rgba(63, 0, 91, 1)',
-    'rgba(127, 0, 63, 1)',
-    'rgba(191, 0, 31, 1)',
-    'rgba(255, 0, 0, 1)',
-  ];
-
+function HeatMap(props) {
   useEffect(() => {
-    handleMapReady();
+    const loadMapScript = () => {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBe4mp-LVlcotjJlniSG7U4XXPS3uLFfsw&libraries=visualization&callback=initMap`;
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+    };
+
+    const initMap = () => {
+      /* Data points defined as an array of LatLng objects */
+      const heatmapData = [
+        new window.google.maps.LatLng(37.782, -122.447),
+        new window.google.maps.LatLng(37.782, -122.445),
+        new window.google.maps.LatLng(37.782, -122.443),
+        new window.google.maps.LatLng(37.782, -122.441),
+        new window.google.maps.LatLng(37.782, -122.439),
+        new window.google.maps.LatLng(37.782, -122.437),
+        new window.google.maps.LatLng(37.782, -122.435),
+        new window.google.maps.LatLng(37.785, -122.447),
+        new window.google.maps.LatLng(37.785, -122.445),
+        new window.google.maps.LatLng(37.785, -122.443),
+        new window.google.maps.LatLng(37.785, -122.441),
+        new window.google.maps.LatLng(37.785, -122.439),
+        new window.google.maps.LatLng(37.785, -122.437),
+        new window.google.maps.LatLng(37.785, -122.435),
+      ];
+
+      const sanFrancisco = new window.google.maps.LatLng(
+        37.774546,
+        -122.433523
+      );
+
+      const map = new window.google.maps.Map(document.getElementById('map'), {
+        center: sanFrancisco,
+        zoom: 13,
+        mapTypeId: 'satellite',
+      });
+
+      const heatmap = new window.google.maps.visualization.HeatmapLayer({
+        data: heatmapData,
+      });
+      heatmap.setMap(map);
+
+      /* Data points defined as a mixture of WeightedLocation and LatLng objects */
+      const heatMapData = [
+        {
+          location: new window.google.maps.LatLng(37.782, -122.447),
+          weight: 0.5,
+        },
+        new window.google.maps.LatLng(37.782, -122.445),
+        {
+          location: new window.google.maps.LatLng(37.782, -122.443),
+          weight: 2,
+        },
+        {
+          location: new window.google.maps.LatLng(37.782, -122.441),
+          weight: 3,
+        },
+        {
+          location: new window.google.maps.LatLng(37.782, -122.439),
+          weight: 2,
+        },
+        new window.google.maps.LatLng(37.782, -122.437),
+        {
+          location: new window.google.maps.LatLng(37.782, -122.435),
+          weight: 0.5,
+        },
+
+        {
+          location: new window.google.maps.LatLng(37.785, -122.447),
+          weight: 3,
+        },
+        {
+          location: new window.google.maps.LatLng(37.785, -122.445),
+          weight: 2,
+        },
+        new window.google.maps.LatLng(37.785, -122.443),
+        {
+          location: new window.google.maps.LatLng(37.785, -122.441),
+          weight: 0.5,
+        },
+        new window.google.maps.LatLng(37.785, -122.439),
+        {
+          location: new window.google.maps.LatLng(37.785, -122.437),
+          weight: 2,
+        },
+        {
+          location: new window.google.maps.LatLng(37.785, -122.435),
+          weight: 3,
+        },
+      ];
+
+      const heatmapWithWeight =
+        new window.google.maps.visualization.HeatmapLayer({
+          data: heatMapData,
+        });
+      heatmapWithWeight.setMap(map);
+    };
+
+    if (!window.google) {
+      window.initMap = initMap;
+      loadMapScript();
+    } else {
+      initMap();
+    }
+
+    return () => {
+      delete window.initMap;
+    };
   }, []);
 
-  const handleMapReady = () => {
-    // Code to handle map ready event
-  };
-
   return (
-    <div className="map-container">
-      <Map
-        google={props.google}
-        className={'map'}
-        zoom={4}
-        initialCenter={props.center}
-        onReady={handleMapReady}
-      >
-        <HeatMap
-          gradient={gradient}
-          positions={props.data}
-          opacity={1}
-          radius={20}
-        />
-      </Map>
+    <div
+      id="map"
+      style={{
+        height: '100%',
+        width: '100%',
+        borderRadius: '32px 0px 0px 32px',
+      }}
+    >
+      {/* Map will be rendered here */}
     </div>
   );
-};
+}
 
-export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBe4mp-LVlcotjJlniSG7U4XXPS3uLFfsw',
-  libraries: ['visualization'],
-})(MapContainer);
+export default HeatMap;
 
-// //   apiKey: 'AIzaSyBe4mp-LVlcotjJlniSG7U4XXPS3uLFfsw'
+// // //   apiKey: 'AIzaSyBe4mp-LVlcotjJlniSG7U4XXPS3uLFfsw'
