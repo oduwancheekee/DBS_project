@@ -5,7 +5,7 @@ import classes from './Charts.module.css';
 const ColumnChart = () => {
   const series = [
     {
-      data: [21, 22, 10, 28, 16, 21, 13, 30],
+      data: [21, 22, 10, 28, 16] /*, 21, 13, 30]*/,
     },
   ];
 
@@ -41,9 +41,9 @@ const ColumnChart = () => {
         ['Jake', 'Williams'],
         'Amber',
         ['Peter', 'Brown'],
-        ['Mary', 'Evans'],
-        ['David', 'Wilson'],
-        ['Lily', 'Roberts'],
+        // ['Mary', 'Evans'],
+        // ['David', 'Wilson'],
+        // ['Lily', 'Roberts'],
       ],
       labels: {
         style: {
@@ -61,7 +61,7 @@ const ColumnChart = () => {
         series={series}
         type="bar"
         height={'100%'}
-        width="300%"
+        width="400%"
       />
     </div>
   );

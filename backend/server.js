@@ -8,35 +8,30 @@ const cors = require('cors');
 app.use(cors()); // Use this after the variable declaration
 
 //DATABASECONNECTION
-// const { Client } = require('pg');
+const { Client } = require('pg');
 
-// const client = new Client({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'whoAreYaDb',
-//   password: 'aspida2002@#',
-//   port: 5432,
-// });
+const client = new Client({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'DB_ASSIGNMENT',
+  password: 'aspida2002@#',
+  port: 5432,
+});
 
-// client.connect((err) => {
-//   if (err) {
-//     console.error('Error connecting to PostgreSQL database', err.stack);
-//   } else {
-//     console.log('Connected to PostgreSQL database');
-//   }
-// });
+client.connect((err) => {
+  if (err) {
+    console.error('Error connecting to PostgreSQL database', err.stack);
+  } else {
+    console.log('Connected to PostgreSQL database');
+  }
+});
 
-// process.on('SIGINT', () => {
-//   client.end(() => {
-//     console.log('Disconnected from PostgreSQL database');
-//     process.exit();
-//   });
-// });
-
-//TODO server takes a random name from the database ( every 24h ) and its data, and set it as the winning name
-// const lngDetector = new LanguageDetect();
-// const winningName = 'ΓΙΩΡΓΟΣ ΜΑΣΟΥΡΑΣ';
-//TODO load all the charachteristics of this name in an object ( to be able to do the comparison later )
+process.on('SIGINT', () => {
+  client.end(() => {
+    console.log('Disconnected from PostgreSQL database');
+    process.exit();
+  });
+});
 
 app.get('/', (req, res) => {
   res.send('Server is running succesfully!');
