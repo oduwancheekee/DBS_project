@@ -13,7 +13,7 @@ const { Client } = require('pg');
 const client = new Client({
   user: 'postgres',
   host: 'localhost',
-  database: 'DB_ASSIGNMENT',
+  database: 'fahrraddiebstahl',
   password: 'aspida2002@#',
   port: 5432,
 });
@@ -34,12 +34,78 @@ process.on('SIGINT', () => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Server is running succesfully!');
+  client.query('SELECT * FROM public.rad', (err, results) => {
+    if (err) {
+      console.error('Error executing query', err.stack);
+      //TODO check what returns in case of error
+      res.json('Something is wrong with the database');
+    } else {
+      console.log('Query results are :', results.rows);
+      res.json(results.rows);
+    }
+  });
+  // res.send(results.rows);
 });
 
-app.get('/dummyData', (req, res) => {
-  res.send([1, 2, 3, 4]);
+app.get('/piechart', (req, res) => {
+  client.query('SELECT * FROM public.rad', (err, results) => {
+    if (err) {
+      console.error('Error executing query', err.stack);
+      //TODO check what returns in case of error
+      res.json('Something is wrong with the database');
+    } else {
+      console.log('Query results are :', results.rows);
+      res.json(results.rows);
+    }
+  });
+  // res.send(results.rows);
 });
+
+app.get('/columnchart', (req, res) => {
+  client.query('SELECT * FROM public.rad', (err, results) => {
+    if (err) {
+      console.error('Error executing query', err.stack);
+      //TODO check what returns in case of error
+      res.json('Something is wrong with the database');
+    } else {
+      console.log('Query results are :', results.rows);
+      res.json(results.rows);
+    }
+  });
+  // res.send(results.rows);
+});
+
+app.get('/googlemaps', (req, res) => {
+  client.query('SELECT * FROM public.rad', (err, results) => {
+    if (err) {
+      console.error('Error executing query', err.stack);
+      //TODO check what returns in case of error
+      res.json('Something is wrong with the database');
+    } else {
+      console.log('Query results are :', results.rows);
+      res.json(results.rows);
+    }
+  });
+  // res.send(results.rows);
+});
+
+app.get('/table', (req, res) => {
+  client.query('SELECT * FROM public.rad', (err, results) => {
+    if (err) {
+      console.error('Error executing query', err.stack);
+      //TODO check what returns in case of error
+      res.json('Something is wrong with the database');
+    } else {
+      console.log('Query results are :', results.rows);
+      res.json(results.rows);
+    }
+  });
+  // res.send(results.rows);
+});
+
+// app.get('/dummyData', (req, res) => {
+//   res.send([1, 2, 3, 4]);
+// });
 // app.get('/search', (req, res) => {
 //   const searchWord = req.query.arg1.toUpperCase();
 //   console.log(lngDetector.detect(searchWord));

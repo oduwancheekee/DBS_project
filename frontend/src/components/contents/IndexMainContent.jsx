@@ -18,7 +18,7 @@ function IndexMainContent(props) {
 
   // useEffect({
   axios
-    .get('http://localhost:8887/dummyData')
+    .get('http://localhost:8887/')
     .then((response) => {
       console.log(response);
     })
