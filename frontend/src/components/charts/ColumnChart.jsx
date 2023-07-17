@@ -1,11 +1,32 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import classes from './Charts.module.css';
+import { useState, useEffect } from 'react';
 
-const ColumnChart = () => {
+const ColumnChart = (props) => {
+  const [regionLebels, setRegionLebels] = useState([]);
+  const [stolenValues, setStolenValues] = useState([]);
+
+  useEffect(() => {
+    const result = props.data;
+    const lengthR = result.length;
+    console.log(lengthR);
+    const labelsArray = [];
+    const infoArray = [];
+    for (let i = 0; i < lengthR; i++) {
+      labelsArray.push(props.data[i].bezirk);
+      infoArray.push(props.data[i].stolen);
+    }
+    setRegionLebels(labelsArray);
+    setStolenValues(infoArray);
+    console.log(labelsArray);
+    console.log(infoArray);
+  }, []);
+
   const series = [
     {
-      data: [21, 22, 10, 28, 16] /*, 21, 13, 30]*/,
+      // data: [21, 22, 10, 28, 16] /*, 21, 13, 30]*/,
+      data: stolenValues,
     },
   ];
 
@@ -35,16 +56,17 @@ const ColumnChart = () => {
       show: false,
     },
     xaxis: {
-      categories: [
-        ['John', 'Doe'],
-        ['Joe', 'Smith'],
-        ['Jake', 'Williams'],
-        'Amber',
-        ['Peter', 'Brown'],
-        // ['Mary', 'Evans'],
-        // ['David', 'Wilson'],
-        // ['Lily', 'Roberts'],
-      ],
+      categories: regionLebels,
+      // categories: [
+      //   ['John', 'Doe'],
+      //   ['Joe', 'Smith'],
+      //   ['Jake', 'Williams'],
+      //   'Amber',
+      //   ['Peter', 'Brown'],
+      //   // ['Mary', 'Evans'],
+      //   // ['David', 'Wilson'],
+      //   // ['Lily', 'Roberts'],
+      // ],
       labels: {
         style: {
           colors: colors,

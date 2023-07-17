@@ -1,54 +1,32 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import classes from './Charts.module.css';
+import { useState, useEffect } from 'react';
 
-const ApexChart = () => {
+const ApexChart = (props) => {
+  const [dayLebels, setDayLebels] = useState([]);
+  const [stolenValues, setStolenValues] = useState([]);
+
+  useEffect(() => {
+    const result = props.data;
+    const lengthR = result.length;
+    console.log(lengthR);
+    const labelsArray = [];
+    const infoArray = [];
+    for (let i = 0; i < lengthR; i++) {
+      labelsArray.push(props.data[i].day);
+      infoArray.push(props.data[i].stolen);
+    }
+    setDayLebels(labelsArray);
+    setStolenValues(infoArray);
+    console.log(labelsArray);
+    console.log(infoArray);
+  }, []);
+
   const series = [
     {
-      name: 'Peter',
-      data: [5, 5, 10, 8, 7, 5, 4, null, null, null, 10, 10, 7, 8, 6, 9],
-    },
-    {
-      name: 'Johnny',
-      data: [
-        10,
-        15,
-        null,
-        12,
-        null,
-        10,
-        12,
-        15,
-        null,
-        null,
-        12,
-        null,
-        14,
-        null,
-        null,
-        null,
-      ],
-    },
-    {
-      name: 'David',
-      data: [
-        null,
-        null,
-        null,
-        null,
-        3,
-        4,
-        1,
-        3,
-        4,
-        6,
-        7,
-        9,
-        5,
-        null,
-        null,
-        null,
-      ],
+      name: 'Desktops',
+      data: stolenValues,
     },
   ];
 
@@ -59,30 +37,36 @@ const ApexChart = () => {
       zoom: {
         enabled: false,
       },
-      animations: {
-        enabled: false,
-      },
+    },
+    dataLabels: {
+      enabled: false,
     },
     stroke: {
-      width: [5, 5, 4],
       curve: 'straight',
     },
-    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
     title: {
-      text: 'Missing data (null values)',
+      text: 'Product Trends by Month',
+      align: 'left',
     },
-    xaxis: {},
+    grid: {
+      row: {
+        colors: ['#c3e8c3', 'transparent'],
+        opacity: 0.5,
+      },
+    },
+    xaxis: {
+      categories: dayLebels,
+    },
   };
 
   return (
     <div id="chart">
       <ReactApexChart
+        background-color="#c3e8c3"
         options={options}
         series={series}
         type="line"
         height={'100%'}
-        border-radious={'32px 0px 0px 32px'}
-        background-color={'red'}
       />
     </div>
   );

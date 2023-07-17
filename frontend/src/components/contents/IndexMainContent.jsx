@@ -15,25 +15,64 @@ function IndexMainContent(props) {
   const [isPieChartClicked, setIsPieChartClicked] = useState(false);
   const [isColumnTableClicked, setIsColumnTableClicked] = useState(false);
   const [isHeatmapClicked, setIsHeatmapeClicked] = useState(false);
+  const [Results, setResults] = useState([]);
 
   // useEffect({
-  axios
-    .get('http://localhost:8887/')
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
 
-  function onNormalTableClickHandler() {
+  async function onNormalTableClickHandler() {
+    await axios
+      .get('http://localhost:8887/linechart')
+      .then((response) => {
+        const data = response.data;
+        const results = [];
+        for (const key in data) {
+          const result = {
+            day: data[key].day,
+            stolen: data[key].bikes_per_day,
+          };
+
+          results.push(result);
+        }
+        setResults(results);
+        console.log(Results);
+        console.log(results);
+        console.log(typeof results);
+        // setResults(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log('Normal Table clicked');
     setIsNormalTableClicked(true);
     setIsPieChartClicked(false);
     setIsColumnTableClicked(false);
     setIsHeatmapeClicked(false);
   }
-  function onPieChartClickHandler() {
+  async function onPieChartClickHandler() {
+    await axios
+      .get('http://localhost:8887/piechart')
+      .then((response) => {
+        const data = response.data;
+        // console.log(response.data);
+        // console.log('Server response: ' + Results);
+        const results = [];
+        for (const key in data) {
+          const result = {
+            bezirk: data[key].bezirk,
+            damage: data[key].schadenshoehe_pro_bezirk,
+          };
+
+          results.push(result);
+        }
+        setResults(results);
+        console.log(Results);
+        console.log(results);
+        console.log(typeof results);
+        // setResults(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log('Pie chart clicked');
     setIsNormalTableClicked(false);
     setIsPieChartClicked(true);
@@ -41,14 +80,60 @@ function IndexMainContent(props) {
     setIsHeatmapeClicked(false);
   }
 
-  function onColumnTableClickHandler() {
+  async function onColumnTableClickHandler() {
+    await axios
+      .get('http://localhost:8887/columnchart')
+      .then((response) => {
+        const data = response.data;
+        // console.log(response.data);
+        // console.log('Server response: ' + Results);
+        const results = [];
+        for (const key in data) {
+          const result = {
+            bezirk: data[key].bezirk,
+            stolen: data[key].quantity_per_area_per_borough,
+          };
+
+          results.push(result);
+        }
+        setResults(results);
+        console.log(Results);
+        console.log(results);
+        console.log(typeof results);
+        // setResults(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log('Column chart clicked');
     setIsNormalTableClicked(false);
     setIsPieChartClicked(false);
     setIsColumnTableClicked(true);
     setIsHeatmapeClicked(false);
   }
-  function onHeatmapClickHandler() {
+  async function onHeatmapClickHandler() {
+    await axios
+      .get('http://localhost:8887/heatmap')
+      .then((response) => {
+        const data = response.data;
+        const results = [];
+        for (const key in data) {
+          const result = {
+            area: data[key].planning_area,
+            count: data[key].count,
+          };
+
+          results.push(result);
+        }
+        setResults(results);
+        console.log(Results);
+        console.log(results);
+        console.log(typeof results);
+        // setResults(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log('Column chart clicked');
     setIsNormalTableClicked(false);
     setIsPieChartClicked(false);
@@ -66,12 +151,13 @@ function IndexMainContent(props) {
           onHeatmapClick={onHeatmapClickHandler}
         />
       </div>
-      {isNormalTableClicked && <ApexChart />}
-      {isPieChartClicked && <PieChart />}
-      {isColumnTableClicked && <ColumnChart />}
+      {isNormalTableClicked && <ApexChart data={Results} />}
+      {isPieChartClicked && <PieChart data={Results} />}
+
+      {isColumnTableClicked && <ColumnChart data={Results} />}
       {isHeatmapClicked && (
         <div className={classes.heatMap}>
-          <HeatMap />
+          <HeatMap data={Results} />
         </div>
       )}
     </div>

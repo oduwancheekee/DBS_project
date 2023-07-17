@@ -33,166 +33,90 @@ process.on('SIGINT', () => {
   });
 });
 
+//arguments: none
+//returns districts and damage fro each district
 app.get('/', (req, res) => {
-  client.query('SELECT * FROM public.rad', (err, results) => {
-    if (err) {
-      console.error('Error executing query', err.stack);
-      //TODO check what returns in case of error
-      res.json('Something is wrong with the database');
-    } else {
-      console.log('Query results are :', results.rows);
-      res.json(results.rows);
+  client.query(
+    'SELECT bez.gemeinde_name AS bezirk, SUM(rad.schadenshoehe) AS schadenshoehe_pro_bezirk FROM bez JOIN lor ON bez.gemeinde_schluessel = lor.bez JOIN rad ON lor.plr_id = rad.lor GROUP BY bez.gemeinde_name ORDER BY schadenshoehe_pro_bezirk',
+    (err, results) => {
+      if (err) {
+        console.error('Error executing query', err.stack);
+        //TODO check what returns in case of error
+        res.json('Something is wrong with the database');
+      } else {
+        console.log('Query results are :', results.rows);
+        res.json(results.rows);
+      }
     }
-  });
+  );
   // res.send(results.rows);
 });
 
 app.get('/piechart', (req, res) => {
-  client.query('SELECT * FROM public.rad', (err, results) => {
-    if (err) {
-      console.error('Error executing query', err.stack);
-      //TODO check what returns in case of error
-      res.json('Something is wrong with the database');
-    } else {
-      console.log('Query results are :', results.rows);
-      res.json(results.rows);
+  client.query(
+    'SELECT bez.gemeinde_name AS bezirk, SUM(rad.schadenshoehe) AS schadenshoehe_pro_bezirk FROM bez JOIN lor ON bez.gemeinde_schluessel = lor.bez JOIN rad ON lor.plr_id = rad.lor GROUP BY bez.gemeinde_name ORDER BY schadenshoehe_pro_bezirk',
+    (err, results) => {
+      if (err) {
+        console.error('Error executing query', err.stack);
+        //TODO check what returns in case of error
+        res.json('Something is wrong with the database');
+      } else {
+        console.log('Query results are :', results.rows);
+        res.json(results.rows);
+      }
     }
-  });
-  // res.send(results.rows);
+  );
 });
 
 app.get('/columnchart', (req, res) => {
-  client.query('SELECT * FROM public.rad', (err, results) => {
-    if (err) {
-      console.error('Error executing query', err.stack);
-      //TODO check what returns in case of error
-      res.json('Something is wrong with the database');
-    } else {
-      console.log('Query results are :', results.rows);
-      res.json(results.rows);
+  client.query(
+    'SELECT bez.gemeinde_name AS bezirk, COUNT(*)/SUM(lor.groesse_m2)*1000000 AS quantity_per_area_per_borough FROM bez JOIN lor ON bez.gemeinde_schluessel = lor.bez JOIN rad ON lor.plr_id = rad.lor GROUP BY bez.gemeinde_name ORDER BY quantity_per_area_per_borough DESC;',
+    (err, results) => {
+      if (err) {
+        console.error('Error executing query', err.stack);
+        res.json('Something is wrong with the database');
+      } else {
+        console.log('Query results are :', results.rows);
+        res.json(results.rows);
+      }
     }
-  });
+  );
   // res.send(results.rows);
 });
 
-app.get('/googlemaps', (req, res) => {
-  client.query('SELECT * FROM public.rad', (err, results) => {
-    if (err) {
-      console.error('Error executing query', err.stack);
-      //TODO check what returns in case of error
-      res.json('Something is wrong with the database');
-    } else {
-      console.log('Query results are :', results.rows);
-      res.json(results.rows);
+app.get('/heatmap', (req, res) => {
+  client.query(
+    'SELECT lor.plr_name AS planning_area, COUNT(*) FROM lor JOIN rad ON lor.plr_id = rad.lor GROUP BY lor.plr_name ORDER BY COUNT(*) DESC LIMIT 10;',
+    (err, results) => {
+      if (err) {
+        console.error('Error executing query', err.stack);
+        //TODO check what returns in case of error
+        res.json('Something is wrong with the database');
+      } else {
+        console.log('Query results are :', results.rows);
+        res.json(results.rows);
+      }
     }
-  });
+  );
   // res.send(results.rows);
 });
 
-app.get('/table', (req, res) => {
-  client.query('SELECT * FROM public.rad', (err, results) => {
-    if (err) {
-      console.error('Error executing query', err.stack);
-      //TODO check what returns in case of error
-      res.json('Something is wrong with the database');
-    } else {
-      console.log('Query results are :', results.rows);
-      res.json(results.rows);
+app.get('/linechart', (req, res) => {
+  client.query(
+    "SELECT to_date(angelegt_am,'DD-MM-YYYY') AS day , COUNT(*) AS bikes_per_day FROM rad where angelegt_am>='01.01.2022' and angelegt_am<='31.12.2023' GROUP BY day ORDER BY day;",
+    (err, results) => {
+      if (err) {
+        console.error('Error executing query', err.stack);
+        //TODO check what returns in case of error
+        res.json('Something is wrong with the database');
+      } else {
+        console.log('Query results are :', results.rows);
+        res.json(results.rows);
+      }
     }
-  });
+  );
   // res.send(results.rows);
 });
-
-// app.get('/dummyData', (req, res) => {
-//   res.send([1, 2, 3, 4]);
-// });
-// app.get('/search', (req, res) => {
-//   const searchWord = req.query.arg1.toUpperCase();
-//   console.log(lngDetector.detect(searchWord));
-//   console.log('Keyword: ' + searchWord);
-//   const pattern = /[A-Z]/;
-//   const result = searchWord.match(pattern);
-//   if (result) {
-//     console.log('Your answer must be in greek!');
-//     //TODO check what returns in case of error
-//     res.json([]);
-//     return;
-//   }
-//   if (searchWord.length < 3) {
-//     console.log('I will not sent anything back');
-//     //TODO check what returns in case of error
-//     res.json([]);
-//     return;
-//   }
-//   client.query(
-//     "SELECT * FROM Players WHERE last_name LIKE '%" + searchWord + "%';",
-//     (err, results) => {
-//       if (err) {
-//         console.error('Error executing query', err.stack);
-//         //TODO check what returns in case of error
-//         res.json('Something is wrong with the database');
-//       } else {
-//         console.log('Query results are :', results.rows);
-//         res.json(results.rows);
-//       }
-//     }
-//   );
-// });
-
-//TODO apply logic
-// app.get('/checkAnswer', (req, res) => {
-//   // const answerWord = req.query.arg1;
-//   console.log('My type is: ' + typeof req.query.arg1);
-//   const guessedPlayer = {
-//     first_name: '',
-//     last_name: req.query.arg1,
-//     age: null,
-//     team: '',
-//     kit_number: null,
-//     ethnicity: '',
-//   };
-//   console.log('The winning name is: ' + winningName);
-//   console.log('The user;s given answer is: ' + guessedPlayer.last_name);
-//   if (guessedPlayer.last_name == winningName) {
-//     console.log('Winner');
-//     //TODO what happens when they give the correct answer
-//     //1. return an object with all the charachteristics and the message: "WIN"
-//     res.json({ status: 'Winner' });
-//   } else {
-//     console.log('Loser');
-//     //TODO what happens when they give the wrong answer
-//     // return an object with the status of each charachteristic and the message: "NOT correct"
-//     // 1. find that name (guessedPlayer.last_name) in the database and take all of his characteristics
-//     client.query(
-//       "SELECT * FROM Players WHERE last_name LIKE '%" +
-//         guessedPlayer.last_name +
-//         "%';",
-//       (err, results) => {
-//         if (err) {
-//           console.error('Error executing query', err.stack);
-//           //TODO check what returns in case of error
-//           res.json('Something is wrong with the database');
-//         } else {
-//           console.log('Player Found :', results.rows);
-//           guessedPlayer.first_name = 'Kostas';
-//           // guessedPlayer.last_name = 'Kokkalis'
-//           guessedPlayer.ethnicity = 'Greek';
-//           guessedPlayer.age = 20;
-//           guessedPlayer.kit_number = 7;
-
-//           res.json(results.rows);
-//         }
-//       }
-//     );
-//     // 2. compare all the characteristics with the correct answer characteristics of the day
-//     // 3. return how should the new answers be
-//     console.log('Guessed Player First Name: ' + guessedPlayer.first_name);
-//     console.log('Guessed Player Last Name: ' + guessedPlayer.last_name);
-//     console.log('Guessed Player Age: ' + guessedPlayer.age);
-//     res.json({ status: 'Loser' });
-//     return;
-//   }
-// });
 
 app.listen(PORT, (error) => {
   if (!error)

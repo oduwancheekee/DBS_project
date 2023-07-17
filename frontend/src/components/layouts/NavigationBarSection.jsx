@@ -20,19 +20,7 @@ function NavigationBarSection(props) {
         />
       </div>
       <div className={classes.buttonBox}>
-        <PrimaryButton
-          buttonTitle="Heatmap"
-          onClick={props.onHeatmapClick}
-        />
-      </div>
-      <div className={classes.buttonBox}>
-        <PrimaryButton
-          buttonTitle="Button 5"
-          onClick={props.onNormalTableClick}
-        />
-      </div>
-      <div className={classes.buttonBox}>
-        <PrimaryButton buttonTitle="Button 6" />
+        <PrimaryButton buttonTitle="Heatmap" onClick={props.onHeatmapClick} />
       </div>
     </div>
   );
