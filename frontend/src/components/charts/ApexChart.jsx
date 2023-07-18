@@ -25,7 +25,7 @@ const ApexChart = (props) => {
 
   const series = [
     {
-      name: 'Desktops',
+      name: 'Bikes',
       data: stolenValues,
     },
   ];
@@ -45,7 +45,7 @@ const ApexChart = (props) => {
       curve: 'straight',
     },
     title: {
-      text: 'Product Trends by Month',
+      text: 'Stolen Bikes By Date',
       align: 'left',
     },
     grid: {
